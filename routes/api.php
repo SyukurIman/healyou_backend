@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/create_donasi' , [DonasiController::class,'create']);
 
     // Payment
-    Route::post('/payment/data/all', [PaymentController::class, 'get_all']);
+    Route::post('/payment/data/all', [PaymentController::class, 'get_data_all']);
     Route::post('/payment/create', [PaymentController::class, 'create_payment']);
     Route::post('/payment/status', [PaymentController::class, 'check_status_payment']);
     Route::post('/payment/data/donasi', [PaymentController::class, 'get_data_id_donasi']);
