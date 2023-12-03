@@ -14,9 +14,9 @@ class PaymentFactory extends Factory
     public function definition()
     {
         return [
-            'id_donasi' => $this->faker->numberBetween(0, 5000),
-            'nominal_key' => $this->faker->numberBetween(90000, 10000000),
-            'status' => $this->faker->numberBetween(0,1),
+            // 'id_donasi' => $this->faker->numberBetween(0, 5000),
+            // 'price' => $this->faker->numberBetween(90000, 10000000),
+            // 'payment_status' => $this->faker->numberBetween(1,1),
         ];
     }
 }

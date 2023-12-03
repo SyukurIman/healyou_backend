@@ -16,8 +16,9 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->integer('id_donasi');
-            $table->text('nominal_key');
-            $table->text('status');
+            $table->decimal('price', 10, 2);
+            $table->enum('payment_status', ['1', '2', '3'])->comment('1=menunggu pembayaran', '2=sudah dibayar', '3=kadaluarsa');
+            $table->text("snap_token", 36)->nullable();
             $table->timestamps();
         });
     }

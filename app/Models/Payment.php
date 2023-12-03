@@ -9,9 +9,13 @@ class Payment extends Model
 {
     use HasFactory;
 
+    protected $table = 'payments';
+
     protected $fillable = [
         'id_donasi',
-        'nominal_key',
-        'status',
+        'id_user',
+        'price',
+        'payment_status',
+        'snap_token'
     ];
 }
