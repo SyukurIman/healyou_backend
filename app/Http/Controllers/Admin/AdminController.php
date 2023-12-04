@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public $data = [
-        "parent" => "admin",
+        "parent" => "Dashboard",
     ];
     public function home_admin(){
-        $this->data['position'] = "home";
-        return view("admin.dashboard", $this->data);
+        $this->data['position'] = "Home";
+        return view("admin.dashboard.index", $this->data);
     }
     public function admin_login_view(){
         return view("admin.auth.login");
