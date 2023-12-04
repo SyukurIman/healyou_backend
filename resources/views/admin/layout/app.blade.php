@@ -70,7 +70,6 @@
   <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
   <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
   <script src="{{ asset('assets/js/plugins/chartjs.min.js')}}"></script>
-<<<<<<< HEAD
   @if($position == "Dashboard")
   <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
@@ -241,11 +240,6 @@
     });
   </script>
   @endif
-=======
-
-  @stack('after-scripts')
-  
->>>>>>> a00e5e6eccafffe4145d374caea7bd7e265bccea
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
