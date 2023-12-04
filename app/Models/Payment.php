@@ -18,4 +18,8 @@ class Payment extends Model
         'payment_status',
         'snap_token'
     ];
+
+    public function users(){
+        return $this->belongsTo(User::class, 'id_user' , 'id');
+    }
 }
