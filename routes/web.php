@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DataDonasiController;
+use App\Http\Controllers\Admin\AdminPaymentController;
 use App\Http\Controllers\Api\PaymentController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,3 +39,11 @@ Route::post('/admin/data_donasi/createform', [DataDonasiController::class, 'crea
 Route::get('/admin/data_donasi/update/{id}', [DataDonasiController::class, 'update'])->middleware('is_admin')->name('admin.data_donasi.update');
 Route::post('/admin/data_donasi/updateform', [DataDonasiController::class, 'updateform'])->middleware('is_admin')->name('admin.data_donasi.updateform');
 Route::post('/admin/data_donasi/deleteform', [DataDonasiController::class, 'deleteform'])->middleware('is_admin')->name('admin.data_donasi.deleteform');
+Route::middleware('is_admin')->group(function () {
+    Route::get('/admin/home', [AdminController::class, 'home_admin'])->name('home_admin');
+    Route::get('/admin/payment/history', [AdminPaymentController::class, 'index'])->name('payment_history_admin');
+    Route::get('/admin/payment/history/edit/{id}', [AdminPaymentController::class, 'from_update_status'])->name('edit_payment_history_admin');
+    Route::post('/admin/payment/history/edit/{id}', [AdminPaymentController::class, 'save_update_status'])->name('edit_payment_history_admin');
+
+    Route::post('/admin/payment/history/get_all_data', [AdminPaymentController::class, 'get_all_data'])->name('all_history_data_admin');
+});
