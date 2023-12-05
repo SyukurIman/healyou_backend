@@ -23,8 +23,14 @@ class AdminPaymentController extends Controller
 
     public function get_all_data(){
         $data = Payment::orderBy('updated_at', 'DESC')->get();
-        return DataTables::of($data)
+        return DataTables::of($data->load('data_donasi', 'users'))
             ->addIndexColumn()
+            ->addColumn('nama_donasi', function($row){
+                return $row->data_donasi->judul_donasi;
+            })
+            ->addColumn('nama_user', function($row){
+                return $row->users->name;
+            })
             ->addColumn('date', function($row){
                 return Carbon::parse($row->created_at)->format('m/d/Y H:i:s');
             })

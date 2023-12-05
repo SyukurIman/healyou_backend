@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DataDonasi;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Filesystem\Filesystem;
 use Carbon\Carbon;
@@ -15,29 +16,29 @@ use Yajra\DataTables\Facades\DataTables;
 class DataDonasiController extends Controller
 {
     public $data = [
-        'parent' => 'Data donasi',
-        'modul' => 'data_donasi',
-        'position' => 'admin',
+        'parent' => 'Donasi',
     ];
     
     function data_donasi(){
+        $this->data['position'] = "Donasi List";
         $this->data['type'] = "index";
-        $this->data['data'] = null;
-    	return view($this->data['position'].'.'.$this->data['modul'].'.index', $this->data);
+    	return view("admin.data_donasi.index", $this->data);
     }
 
     function create(){
+        $this->data['position'] = "Donasi Create";
         $this->data['type'] = "create";
-    	return view($this->data['position'].'.'.$this->data['modul'].'.index', $this->data);
+    	return view("admin.data_donasi.index", $this->data);
     }
 
     function update($id_data_donasi){
+        $this->data['position'] = "Donasi Update";
         $this->data['type'] = "update";
         $query = DataDonasi::where('id_data_donasi', '=', $id_data_donasi)
         ->orderBy('data_donasi.id_data_donasi');
         $query = $query->first();
         $this->data['data'] = $query;
-    	return view($this->data['position'].'.'.$this->data['modul'].'.index', $this->data);
+    	return view("admin.data_donasi.index", $this->data);
     }
 
     function table(){
@@ -49,7 +50,7 @@ class DataDonasiController extends Controller
                 $btn = '';
                 $btn .= '<div class="text-center">';
                 $btn .= '<div class="btn-group btn-group-solid mx-2">';
-                $btn .= '<a href="'.'/admin/data_donasi/update/'.$row->id_data_donasi.'" class="btn btn-warning btn-raised btn-xs" id="btn-ubah" title="Ubah"><i class="icon-edit"></i></a> &nbsp;';
+                $btn .= '<a href="'.env('APP_URL').'/admin/data_donasi/update/'.$row->id_data_donasi.'" class="btn btn-warning btn-raised btn-xs" id="btn-ubah" title="Ubah"><i class="icon-edit"></i></a> &nbsp;';
                 $btn .= '<button class="btn btn-danger btn-raised btn-xs" id="btn-hapus" title="Hapus"><i class="icon-trash"></i></button>';
                 $btn .= '</div>';    
                 $btn .= '</div>';
@@ -180,6 +181,7 @@ class DataDonasiController extends Controller
     
                 // Menghapus data dari tabel
                 DataDonasi::where('id_data_donasi', $request->id_data_donasi)->delete();
+                Payment::where('id_donasi', $request->id_data_donasi)->delete();
             }
 
             DB::commit();

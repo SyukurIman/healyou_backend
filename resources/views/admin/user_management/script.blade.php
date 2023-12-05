@@ -1,14 +1,9 @@
 <script>
-    var data = function () {
-        let valid = true, real='', message = '', title = '', type = '';
+    var data = function (){
         var dt = new Date();
         var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
-        var table = function(){
-            swal.fire({
-                html: '<h5>Loading...</h5>',
-                showConfirmButton: false
-            });
+        var table_payment_history = function(){
             var t = $('#table').DataTable({
                 processing: true,
                 pageLength: 10,
@@ -21,7 +16,7 @@
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{$parent}} - ' + time,
+                        title: 'Data User - ' + time,
                         text: '<i class="fa fa-file-excel-o"></i> Cetak',
                         titleAttr: 'Cetak',
                         exportOptions: {
@@ -33,7 +28,7 @@
                     },
                 ],
                 'ajax': {
-                    "url": "{{ route('admin.data_donasi.table') }}",
+                    "url": "{{ route('all_user_data_admin') }}",
                     "method": "POST",
                     "complete": function () {
                         $('.buttons-excel').hide();
@@ -43,11 +38,11 @@
                 'columns': [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'text-center', orderable: false, searchable: false },
                     { data: 'action', name: 'action', class: 'text-center', orderable: false, searchable: false },
-                    { data: 'judul_donasi', name: 'judul_donasi', class: 'text-left' },
-                    { data: 'deskripsi_donasi', name: 'deskripsi_donasi', class: 'text-left' },
-                    { data: 'target', name: 'target', class: 'text-left' },
-                    { data: 'gambar_donasi', name: 'gambar_donasi', class: 'text-left' },
-                         
+                    { data: 'name', name: 'name', class: 'text-left' },
+                    { data: 'email', name: 'email', class: 'text-left' },
+                    { data: 'status_user', name: 'status_user', class: 'text-left' },
+                    
+
                 ],
                 "order": [],
                 "columnDefs": [
@@ -68,17 +63,16 @@
                     "infoFiltered": "(Difilter dari _MAX_ total data)"
                 }
             });
+
             filterKolom(t);
             hideKolom(t);
             cetak(t);
-           
-        };
+        }
 
         var filterKolom = function(t){
             $('.toggle-vis').on('change', function (e) {
                 e.preventDefault();
                 var column = t.column($(this).attr('data-column'));
-                console.log(column);
                 column.visible(!column.visible());
             });
         }
@@ -102,117 +96,21 @@
             });
         }
 
-        var setData = function(){
-            $('#table_processing').html('Loading...');
-        }
-
         var muatUlang = function(){
             $('#btn-muat-ulang').on('click', function(){
                 $('#table').DataTable().ajax.reload();
             });
         }
-    
-        var create = function(){
-            $('#simpan').click( function(e) {
-                e.preventDefault();
+
+        var msg = function(){
+            @if(session()->get('status'))
                 swal.fire({
-                    title: 'Apakah Anda Yakin?',
-                    text: 'Menyimpan Data Ini',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#2196F3',
-                    confirmButtonText: 'Ya',
-                    cancelButtonText: 'Tidak'
+                    title: "Success",
+                    text : '{{ session()->get('status') }}',
+                    confirmButtonColor: '#EF5350',
+                    type: "success"
                 })
-                .then((result) => {
-                    if (result.value) {
-                        var formdata = $(this).serialize();
-                        valid = true
-                        var err = 0;
-                        $('.help-block').hide();
-                        $('.form-error').removeClass('form-error');
-                        $('#form-data').find('input, textarea').each(function(){
-                            if($(this).prop('required')){
-                                if(err == 0){
-                                    if($(this).val() == ""){
-                                        valid = false;
-                                        real = this.name;
-                                        title = $('label[for="' + this.name + '"]').html();
-                                        type = '';
-                                        if($(this).is("input")){
-                                            type = 'diisi';
-                                        }else{
-                                            type = 'pilih';
-                                        }
-                                        err++;
-                                    }
-                                }
-                            }
-                        })
-                        if(!valid){
-                            if(type == 'diisi'){
-                                $("input[name="+real+"]").addClass('form-error');
-                                $($("input[name="+real+"]").closest('div').find('.help-block')).html(title + 'belum ' + type);
-                                $($("input[name="+real+"]").closest('div').find('.help-block')).show();
-                            } else{
-                                $("textarea[name="+real+"]").addClass('form-error');
-                                $($("textarea[name="+real+"]").closest('div').find('.help-block')).html(title + 'belum ' + type);
-                                $($("textarea[name="+real+"]").closest('div').find('.help-block')).show();
-                            }
-        
-                            swal.fire({
-                                text : title + 'belum ' + type,
-                                type : "error",
-                                confirmButtonColor: "#EF5350",
-                            });
-                        } else{
-                            var formData = new FormData($('#form-data')[0]);
-                            $.ajax({
-                                @if($type == "create")
-                                url : "{{ route('admin.data_donasi.createform') }} ",
-                                @else
-                                url : "{{ route('admin.data_donasi.updateform') }}",
-                                @endif
-                                type : "POST",
-                                data : formData,
-                                processData: false,
-                                contentType: false,
-                                beforeSend: function(){
-                                    swal.fire({
-                                        html: '<h5>Loading...</h5>',
-                                        showConfirmButton: false
-                                    });
-                                },
-                                success: function(result){
-                                    if(result.type == 'success'){
-                                        swal.fire({
-                                            title: result.title,
-                                            text : result.text,
-                                            confirmButtonColor: result.ButtonColor,
-                                            type : result.type,
-                                        }).then((result) => {
-                                            location.href = "{{ env('APP_URL') }}/admin/data_donasi";
-                                        });
-                                    }else{
-                                        swal.fire({
-                                            title: result.title,
-                                            text : result.text,
-                                            confirmButtonColor: result.ButtonColor,
-                                            type : result.type,
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    } else {
-                        swal.fire({
-                            text : 'Aksi Dibatalkan!',
-                            type : "info",
-                            confirmButtonColor: "#EF5350",
-                        });
-                    }
-                });
-            });
+            @endif
         }
 
         var hapus = function() {
@@ -234,10 +132,10 @@
                         if (result.value) {
                             var fd = new FormData();
                             fd.append('_token', '{{ csrf_token() }}');
-                            fd.append('id_data_donasi', data.id_data_donasi);
+                            fd.append('id_user', data.id);
 
                             $.ajax({
-                                url: "{{ route('admin.data_donasi.deleteform') }}",
+                                url: "{{ route('admin.user_management.delete') }}",
                                 type: "POST",
                                 data: fd,
                                 dataType: "json",
@@ -288,25 +186,26 @@
         }
 
         return {
-            init: function () {
-                @if($type == "index")
-                table();
-                muatUlang();
+            init: function(){
+                @if($position == "Data User")
+                    table_payment_history();
+                    muatUlang();
+                    hapus();
                 @endif
-                setData();
-                create();
-                hapus();
+
+                msg();
+                
             }
-        }
+        }  
     }();
+
     $(document).ready(function(){
         $.ajaxSetup({
             headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.fn.dataTable.ext.errMode = 'none';
         data.init();
-    }); 
-    
+    });
 </script>

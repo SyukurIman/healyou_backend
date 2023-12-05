@@ -16,7 +16,7 @@
                 buttons: [
                     {
                         extend: 'excel',
-                        title: 'Data Kepala Sekolah - ' + time,
+                        title: 'Data Payment - ' + time,
                         text: '<i class="fa fa-file-excel-o"></i> Cetak',
                         titleAttr: 'Cetak',
                         exportOptions: {
@@ -38,7 +38,8 @@
                 'columns': [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'text-center', orderable: false, searchable: false },
                     { data: 'action', name: 'action', class: 'text-center', orderable: false, searchable: false },
-                    { data: 'id_donasi', name: 'id_donasi', class: 'text-left' },
+                    { data: 'nama_user', name: 'nama_user', class: 'text-left' },
+                    { data: 'nama_donasi', name: 'nama_donasi', class: 'text-left' },
                     { data: 'date', name: 'date', class: 'text-left' },
                     { data: 'nominal_rp', name: 'nominal_rp', class: 'text-left' },
                     { data: 'status_pembayaran', name: 'status_pembayaran', class: 'text-left' },

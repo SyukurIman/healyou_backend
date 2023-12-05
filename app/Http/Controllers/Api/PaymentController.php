@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use App\Models\DataDonasi;
 use App\Models\Donasi;
 use App\Services\Midtrans\CreateSnapTokenService; // => put it at the top of the class
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class PaymentController extends Controller
 
     public function get_data_all()
     {
-        $data_payment = Payment::where('id_user', Auth::user()->id)->get();
+        $data_payment = Payment::where('id_user', Auth::user()->id)->with('data_donasi')->get();
 
         if($data_payment){
             return response()->json([
@@ -57,27 +58,29 @@ class PaymentController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $payment = Payment::create([
-            'id_donasi'         => $request->id_donasi,
-            'id_user'           => Auth::user()->id,
-            'price'             => $request->price,
-            'payment_status'    => 1
-        ]);
-
-        if($payment){
-            $midtrans = new CreateSnapTokenService($payment);
-            $snapToken = $midtrans->getSnapToken();
-
-            $payment->snap_token = $snapToken;
-            $payment->save();
-
-            return response()->json([
-                'success' => true,
-                'token_snap_midtrans'  => $snapToken,
-            ], 201);
-
+        if (DataDonasi::where('id_data_donasi', $request->id_donasi)->first()) {
+            $payment = Payment::create([
+                'id_donasi'         => $request->id_donasi,
+                'id_user'           => Auth::user()->id,
+                'price'             => $request->price,
+                'payment_status'    => 1
+            ]);
+    
+            if($payment){
+                $midtrans = new CreateSnapTokenService($payment);
+                $snapToken = $midtrans->getSnapToken();
+    
+                $payment->snap_token = $snapToken;
+                $payment->save();
+    
+                return response()->json([
+                    'success' => true,
+                    'token_snap_midtrans'  => $snapToken,
+                ], 201);
+    
+            }
         }
-
+        
         //return JSON process insert failed 
         return response()->json([
             'success' => false,
@@ -93,11 +96,11 @@ class PaymentController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $data_payment = Payment::find($request->id_payment);
+        $data_payment = Payment::where('id', $request->id_payment)->with('data_donasi')->first();
         if ($data_payment){
             return response()->json([
                 'success' => true,
-                'data_payment' => $data_payment
+                'data_payment' => $data_payment,
             ]);
         }
 
