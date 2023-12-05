@@ -4,7 +4,7 @@
         <div class="card-header pb-0">
           <div class="row">
             <div class="col-lg-6 col-7">
-              <h6>Projects</h6>
+              <h6>Data Donasi</h6>
             </div>
             <div class="col-lg-6 col-5 my-auto text-end">
               <a href="{{ env('APP_URL') }}/admin/data_donasi/create" type="button" class="btn btn-primary btn-data" id="btn-create">
