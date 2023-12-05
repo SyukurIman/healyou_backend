@@ -22,4 +22,8 @@ class Payment extends Model
     public function users(){
         return $this->belongsTo(User::class, 'id_user' , 'id');
     }
+
+    public function data_donasi(){
+        return $this->belongsTo(DataDonasi::class, 'id_donasi' , 'id_data_donasi');
+    }
 }

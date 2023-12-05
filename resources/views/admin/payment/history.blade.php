@@ -62,6 +62,9 @@
                     Aksi
                 </th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                  Nama User
+                </th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Nama Donasi
                 </th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">

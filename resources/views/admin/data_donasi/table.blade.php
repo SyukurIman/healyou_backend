@@ -7,7 +7,7 @@
               <h6>Projects</h6>
             </div>
             <div class="col-lg-6 col-5 my-auto text-end">
-              <a href="/admin/data_donasi/create" type="button" class="btn btn-primary btn-data" id="btn-create">
+              <a href="{{ env('APP_URL') }}/admin/data_donasi/create" type="button" class="btn btn-primary btn-data" id="btn-create">
                 <i class="fa fa-plus-square"></i> <span>Tambah</span>
               </a>
             </div>

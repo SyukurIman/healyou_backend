@@ -17,7 +17,7 @@
                     <div class="form-group row">
                         <div class="col-6 mt1">
                             <label for="id_donasi">Nama Donasi</label>
-                            <input class="form-control input_form" type="text" name="id_donasi" id="" value="{{ $data_payment->id_donasi }}" disabled>
+                            <input class="form-control input_form" type="text" name="id_donasi" id="" value="{{ $data_payment->data_donasi->judul_donasi }}" disabled>
                         </div>
                 
                         <div class="col-6 mt1">
