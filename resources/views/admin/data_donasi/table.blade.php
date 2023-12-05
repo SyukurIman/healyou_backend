@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="card-body px-0 pb-2">
-          <div class="table-responsive">
+          <div class="table-responsive px-3">
             <table id="table" class="table stripe" style="width: 100%;">
                 <thead>
                     <tr class="tr-table">

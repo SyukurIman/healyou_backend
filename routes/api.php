@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\DonasiController;
 use App\Http\Controllers\Api\PaymentCallbackController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\DataDonasiApiController;
 use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,8 @@ Route::group(['middleware' => 'auth:api'], function(){
 });
 
 Route::post('payments/notif', [PaymentCallbackController::class, 'receive']);
+Route::get('pilihan/data_donasi', [DataDonasiApiController::class, 'get_data_donasi']);
+Route::get('pilihan/detail_data_donasi', [DataDonasiApiController::class, 'get_detail_data_donasi']);
 
 
 
