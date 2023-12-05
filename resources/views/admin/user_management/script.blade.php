@@ -16,7 +16,7 @@
                 buttons: [
                     {
                         extend: 'excel',
-                        title: 'Data Payment - ' + time,
+                        title: 'Data User - ' + time,
                         text: '<i class="fa fa-file-excel-o"></i> Cetak',
                         titleAttr: 'Cetak',
                         exportOptions: {
@@ -28,7 +28,7 @@
                     },
                 ],
                 'ajax': {
-                    "url": "{{ route('all_history_data_admin') }}",
+                    "url": "{{ route('all_user_data_admin') }}",
                     "method": "POST",
                     "complete": function () {
                         $('.buttons-excel').hide();
@@ -38,11 +38,9 @@
                 'columns': [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'text-center', orderable: false, searchable: false },
                     { data: 'action', name: 'action', class: 'text-center', orderable: false, searchable: false },
-                    { data: 'nama_user', name: 'nama_user', class: 'text-left' },
-                    { data: 'nama_donasi', name: 'nama_donasi', class: 'text-left' },
-                    { data: 'date', name: 'date', class: 'text-left' },
-                    { data: 'nominal_rp', name: 'nominal_rp', class: 'text-left' },
-                    { data: 'status_pembayaran', name: 'status_pembayaran', class: 'text-left' },
+                    { data: 'name', name: 'name', class: 'text-left' },
+                    { data: 'email', name: 'email', class: 'text-left' },
+                    { data: 'status_user', name: 'status_user', class: 'text-left' },
                     
 
                 ],
@@ -115,11 +113,88 @@
             @endif
         }
 
+        var hapus = function() {
+            $('#table').on('click', '#btn-hapus', function() {
+                var baris = $(this).parents('tr')[0];
+                var table = $('#table').DataTable();
+                var data = table.row(baris).data();
+
+                swal.fire({
+                        title: 'Apakah Anda Yakin?',
+                        text: 'Menghapus Data Ini',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#2196F3',
+                        confirmButtonText: 'Ya',
+                        cancelButtonText: 'Tidak'
+                    })
+                    .then((result) => {
+                        if (result.value) {
+                            var fd = new FormData();
+                            fd.append('_token', '{{ csrf_token() }}');
+                            fd.append('id_user', data.id);
+
+                            $.ajax({
+                                url: "{{ route('admin.user_management.delete') }}",
+                                type: "POST",
+                                data: fd,
+                                dataType: "json",
+                                contentType: false,
+                                processData: false,
+                                beforeSend: function() {
+                                    swal.fire({
+                                        html: '<h5>Loading...</h5>',
+                                        showConfirmButton: false
+                                    });
+                                },
+                                success: function(result) {
+                                    swal.fire({
+                                        title: result.title,
+                                        text: result.text,
+                                        confirmButtonColor: result.ButtonColor,
+                                        type: result.type,
+                                    });
+
+                                    if (result.type == 'success') {
+                                        swal.fire({
+                                            title: result.title,
+                                            text: result.text,
+                                            confirmButtonColor: result.ButtonColor,
+                                            type: result.type,
+                                        }).then((result) => {
+                                            $('#table').DataTable().ajax.reload();
+                                        });
+                                    } else {
+                                        swal.fire({
+                                            title: result.title,
+                                            text: result.text,
+                                            confirmButtonColor: result.ButtonColor,
+                                            type: result.type,
+                                        });
+                                    }
+                                }
+                            });
+                        } else {
+                            swal.fire({
+                                text: 'Aksi Dibatalkan!',
+                                type: "info",
+                                confirmButtonColor: "#EF5350",
+                            });
+                        }
+                    });
+            });
+        }
+
         return {
             init: function(){
-                table_payment_history();
-                muatUlang();
+                @if($position == "Data User")
+                    table_payment_history();
+                    muatUlang();
+                    hapus();
+                @endif
+
                 msg();
+                
             }
         }  
     }();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DataDonasi;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Filesystem\Filesystem;
 use Carbon\Carbon;
@@ -180,6 +181,7 @@ class DataDonasiController extends Controller
     
                 // Menghapus data dari tabel
                 DataDonasi::where('id_data_donasi', $request->id_data_donasi)->delete();
+                Payment::where('id_donasi', $request->id_data_donasi)->delete();
             }
 
             DB::commit();

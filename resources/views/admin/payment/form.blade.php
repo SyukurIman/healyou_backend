@@ -19,21 +19,17 @@
                             <label for="id_donasi">Nama Donasi</label>
                             <input class="form-control input_form" type="text" name="id_donasi" id="" value="{{ $data_payment->data_donasi->judul_donasi }}" disabled>
                         </div>
-                
+      
                         <div class="col-6 mt1">
-                            <label for="id_donasi">Nama Donasi</label>
-                            <input class="form-control input_form" type="text" name="id_donasi" id="" value="{{ $data_payment->id_donasi }}" disabled>
-                        </div>
-                
-                        <div class="col-6 mt1">
-                            <label for="name_donasi">Nama Donasi</label>
+                            <label for="name_donasi">Nama Pengguna</label>
                             <input class="form-control input_form" type="text" name="nama_donasi" disabled value="{{ $data_payment->users->name }}">
                         </div>
                 
                         <div class="col-6 mt1">
-                            <label for="email_donasi">Email Donasi</label>
+                            <label for="email_donasi">Email </label>
                             <input class="form-control input_form" type="text" name="email_donasi" disabled value="{{ $data_payment->users->email }}">
                         </div>
+                        
                 
                         <div class="col mt1">
                             <label for="payment_status">Status Pembayaran</label>
