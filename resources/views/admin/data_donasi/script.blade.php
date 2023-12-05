@@ -33,7 +33,7 @@
                     },
                 ],
                 'ajax': {
-                    "url": "/admin/data_donasi/table",
+                    "url": "{{ route('admin.data_donasi.table') }}",
                     "method": "POST",
                     "complete": function () {
                         $('.buttons-excel').hide();
@@ -169,9 +169,9 @@
                             var formData = new FormData($('#form-data')[0]);
                             $.ajax({
                                 @if($type == "create")
-                                url : "/admin/data_donasi/createform",
+                                url : "{{ route('admin.data_donasi.createform') }} ",
                                 @else
-                                url : "/admin/data_donasi/updateform",
+                                url : "{{ route('admin.data_donasi.updateform') }}",
                                 @endif
                                 type : "POST",
                                 data : formData,
@@ -191,7 +191,7 @@
                                             confirmButtonColor: result.ButtonColor,
                                             type : result.type,
                                         }).then((result) => {
-                                            location.href = "/admin/data_donasi";
+                                            location.href = "{{ env('APP_URL') }}/admin/data_donasi";
                                         });
                                     }else{
                                         swal.fire({
@@ -237,7 +237,7 @@
                             fd.append('id_data_donasi', data.id_data_donasi);
 
                             $.ajax({
-                                url: "/admin/data_donasi/deleteform",
+                                url: "{{ route('admin.data_donasi.deleteform') }}",
                                 type: "POST",
                                 data: fd,
                                 dataType: "json",
