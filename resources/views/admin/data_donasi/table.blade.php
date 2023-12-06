@@ -10,6 +10,8 @@
               <a href="{{ env('APP_URL') }}/admin/data_donasi/create" type="button" class="btn btn-primary btn-data" id="btn-create">
                 <i class="fa fa-plus-square"></i> <span>Tambah</span>
               </a>
+                <button class="btn btn-secondary btn-data" id="filter_btn"><i class="fas fa-filter"></i> <span>Filter</span></button>
+                <button class="btn btn-warning btn-data" id="download_btn"><i class="fas fa-download"></i> <span>Download</span></button>
             </div>
           </div>
         </div>
