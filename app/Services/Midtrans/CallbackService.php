@@ -56,7 +56,7 @@ class CallbackService extends Midtrans
  
     protected function _createLocalSignatureKey()
     {
-        $orderId = 'healyou_'.$this->payment->id;
+        $orderId = 'healyou_'.$this->payment->id.'_'.$this->payment->created_at;
         $statusCode = $this->notification->status_code;
         $grossAmount = $this->payment->price;
         $serverKey = $this->serverKey;
