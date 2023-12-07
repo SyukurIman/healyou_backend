@@ -21,7 +21,7 @@ class CreateSnapTokenService extends Midtrans
         // $donasi = Payment::where('id_donasi', $request->id_donasi)->first();
         $params = [
             'transaction_details' => [
-                'order_id' => 'healyou_'.$this->payment->id.'_'.date("m/d/Y H:i:s"),
+                'order_id' => 'healyou_'.$this->payment->id.'_'.$this->payment->created_at,
                 'gross_amount' => $this->payment->price,
                 
             ],
