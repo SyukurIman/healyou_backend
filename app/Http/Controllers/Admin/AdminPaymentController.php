@@ -38,7 +38,13 @@ class AdminPaymentController extends Controller
                 return "Rp. ".number_format($row->price, 2);
             })
             ->addColumn('status_pembayaran', function($row){
-                return ($row->payment_status == 1 ? 'Pembayaran Berhasil' : $row->payment_status == 2 ) ? 'Menunggu Pembayaran'  : 'Pembayaran Expired';
+                $data = 'Pembayaran Expired';
+                if ($row->payment_status==1){
+                    $data = 'Menunggu Pembayaran';
+                } else if ($row->payment_status==2){
+                    $data = 'Pembayaran Berhasil';
+                } 
+                return $data;
             })
             ->addColumn('action', function($row){
                 $btn = '';
