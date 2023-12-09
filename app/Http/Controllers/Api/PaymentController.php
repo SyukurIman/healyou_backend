@@ -51,7 +51,7 @@ class PaymentController extends Controller
     public function create_payment(Request $request){
         $validator = Validator::make($request->all(), [
             'id_donasi'         => 'required',
-            'price'             => 'required'
+            'price'             => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -59,12 +59,17 @@ class PaymentController extends Controller
         }
 
         if (DataDonasi::where('id_data_donasi', $request->id_donasi)->first()) {
-            $payment = Payment::create([
+            $data = [
                 'id_donasi'         => $request->id_donasi,
                 'id_user'           => Auth::user()->id,
                 'price'             => $request->price,
                 'payment_status'    => 1
-            ]);
+            ];
+
+            $data['dukungan'] =  ($request->dukungan != '' ?  $request->dukungan : '');
+            $data['nama_donatur'] = ($request->nama_donatur != '' ? $request->nama_donatur : 'Donatur Rahasia');
+            
+            $payment = Payment::create($data);
     
             if($payment){
                 $midtrans = new CreateSnapTokenService($payment);
@@ -76,6 +81,8 @@ class PaymentController extends Controller
                 return response()->json([
                     'success' => true,
                     'token_snap_midtrans'  => $snapToken,
+                    'dukungan' => $request->dukungan,
+                    'nama_donatur' => $data['nama_donatur']
                 ], 201);
     
             }
@@ -84,6 +91,7 @@ class PaymentController extends Controller
         //return JSON process insert failed 
         return response()->json([
             'success' => false,
+            'data' => $data
         ], 409);
     }
 
@@ -119,11 +127,18 @@ class PaymentController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $data_payment = Payment::where('id_donasi', $request->id_donasi)->get();
+        $data_payment = Payment::where('id_donasi', $request->id_donasi)->where('payment_status', '2')->get();
+
+        $total_price_now = 0;
+        foreach ($data_payment as $key => $d_p) {
+            $total_price_now += $d_p->price;
+        }
         if ($data_payment){
             return response()->json([
                 'success' => true,
-                'data_payment' => $data_payment
+                'total_terkumpul' => $total_price_now,
+                'data_payment' => $data_payment,
+                
             ]);
         }
 

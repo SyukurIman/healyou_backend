@@ -16,7 +16,9 @@ class Payment extends Model
         'id_user',
         'price',
         'payment_status',
-        'snap_token'
+        'snap_token',
+        'dukungan',
+        'nama_donatur'
     ];
 
     public function users(){
