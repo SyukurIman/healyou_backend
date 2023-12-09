@@ -38,11 +38,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/payment/data/all', [PaymentController::class, 'get_data_all']);
     Route::post('/payment/create', [PaymentController::class, 'create_payment']);
     Route::post('/payment/status', [PaymentController::class, 'check_status_payment']);
-    Route::post('/payment/data/donasi', [PaymentController::class, 'get_data_id_donasi']);
     Route::post('/payment/data', [PaymentController::class, 'get_data']);
 
 });
-
+Route::post('/payment/data/donasi', [PaymentController::class, 'get_data_id_donasi']);
 Route::post('payments/notif', [PaymentCallbackController::class, 'receive']);
 Route::get('pilihan/data_donasi', [DataDonasiApiController::class, 'get_data_donasi']);
 Route::get('pilihan/detail_data_donasi', [DataDonasiApiController::class, 'get_detail_data_donasi']);
