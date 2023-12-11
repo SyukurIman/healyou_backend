@@ -44,6 +44,7 @@
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'text-center', orderable: false, searchable: false },
                     { data: 'action', name: 'action', class: 'text-center', orderable: false, searchable: false },
                     { data: 'judul_donasi', name: 'judul_donasi', class: 'text-left' },
+                    { data: 'batas_waktu_donasi', name: 'batas_waktu_donasi', class: 'text-left' },
                     { data: 'deskripsi_donasi', name: 'deskripsi_donasi', class: 'text-left' },
                     { data: 'target', name: 'target', class: 'text-left' },
                     { data: 'gambar_donasi', name: 'gambar_donasi', class: 'text-left' },

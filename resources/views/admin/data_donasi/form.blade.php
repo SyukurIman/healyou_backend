@@ -25,6 +25,11 @@
                         <p class="help-block" style="display: none;"></p>
                     </div>
                     <div class="col mt-2"> 
+                      <label for="batas_waktu_donasi" class="form-label">Batas Donasi</label>
+                      <input type="date" class="form-control input_form" name="batas_waktu_donasi" value="{{($type == 'create' ? '' : $data->batas_waktu_donasi )}}" id="batas_waktu_donasi" required>
+                      <p class="help-block" style="display: none;"></p>
+                  </div>
+                    <div class="col mt-2"> 
                         <label for="deskripsi_donasi" class="form-label">Deskripsi Donasi</label>
                         <textarea class="form-control input_form" name="deskripsi_donasi"placeholder="Leave a comment here" id="deskripsi_donasi">{{($type == 'create' ? '' : $data->deskripsi_donasi)}}</textarea>
                         <p class="help-block" style="display: none;"></p>

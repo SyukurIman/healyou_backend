@@ -15,6 +15,7 @@ class DataDonasi extends Model
         'judul_donasi',
         'deskripsi_donasi',
         'target',
-        'gambar_donasi'
+        'gambar_donasi',
+        'batas_waktu_donasi'
     ];
 }

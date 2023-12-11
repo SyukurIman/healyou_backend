@@ -23,6 +23,7 @@
                         <th class="th-table" style="max-width: 20px;">No</th>
                         <th class="th-table" style="max-width: 50px;">Aksi</th>
                         <th class="th-table" style="max-width: 200px;">Judul</th>
+                        <th class="th-table" style="max-width: 200px;">Batas Donasi</th>
                         <th class="th-table" style="max-width: 100px;">Deskripsi</th>
                         <th class="th-table" style="max-width: 100px;">target</th>
                         <th class="th-table" style="max-width: 100px;">gambar</th>

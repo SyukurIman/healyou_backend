@@ -83,6 +83,7 @@ class DataDonasiController extends Controller
                 $dataDonasi->judul_donasi = $request->judul_donasi;
                 $dataDonasi->deskripsi_donasi = $request->deskripsi_donasi;
                 $dataDonasi->target = $request->target;
+                $dataDonasi->batas_waktu_donasi=$request->batas_waktu_donasi;
                 $dataDonasi->save();
 
                 if(isset($request->gambar_donasi)){
@@ -129,7 +130,8 @@ class DataDonasiController extends Controller
                     [
                         'judul_donasi' => $request->judul_donasi,
                         'deskripsi_donasi' => $request->deskripsi_donasi,   
-                        'target' => $request->target,            
+                        'target' => $request->target,   
+                        'batas_waktu_donasi' => $request->batas_waktu_donasi,            
                     ]
                 );
 
