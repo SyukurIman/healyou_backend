@@ -14,7 +14,7 @@ class AddBatasWaktuDonasiDataDonasiTable extends Migration
     public function up()
     {
         Schema::table('data_donasi', function (Blueprint $table) {
-            $table->date('batas_waktu_donasi');
+            $table->date('batas_waktu_donasi')->default('2023-02-01');
         });
     }
 
