@@ -40,7 +40,8 @@
                       <a href="{{($type == 'create' ? asset('/assets/img/no-photo-available.png') : asset('images/donasi/'.$data->id_data_donasi.'/'.$data->gambar_donasi))}}" target="_blank" id="imgLink">
                         <img src="{{($type == 'create' ?  asset('/assets/img/no-photo-available.png') : asset('images/donasi/'.$data->id_data_donasi.'/'.$data->gambar_donasi))}}" class="mb-3 mt-4" id="output" width="150px">
                       </a>
-                      <input type="file" class="form-control" name="gambar_donasi" value="{{($type == 'create' ? '' : asset('images/donasi/'.$data->id_data_donasi.'/'.$data->gambar_donasi))}}" id="gambar_donasi" onchange="tampilkanGambar(this)" required>
+                      <input type="file" class="form-control" name="gambar_donasi" id="gambar_donasi" onchange="tampilkanGambar(this)" {{ $type == 'create' ? 'required' : '' }}
+                      value="{{ $type == 'create' ? '' : asset('images/donasi/'.$data->id_data_donasi.'/'.$data->gambar_donasi) }}">
                   </div>
                 </div>
                 <script>
