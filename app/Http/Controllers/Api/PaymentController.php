@@ -91,7 +91,7 @@ class PaymentController extends Controller
         //return JSON process insert failed 
         return response()->json([
             'success' => false,
-            'data' => $data
+            'msg' => "Data Donasi Tidak Ditemukan" 
         ], 409);
     }
 
